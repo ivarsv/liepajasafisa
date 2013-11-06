@@ -106,7 +106,6 @@ def createEvents(events):
             
         # go through existing events and delete the ones 
         # that are too similar.
-        score = 0
         for existingEvent in eventMap[date]:
             score = event.score(existingEvent)
             if score > collector.model.RATIO_THRESHOLD:
@@ -117,12 +116,11 @@ def createEvents(events):
                 deleteEvent(existingEvent)
                 removeEvents.append(existingEvent)
              
-        if score < collector.model.RATIO_THRESHOLD:   
-            try: 
-                logger.info("Persisting event: %s", event)
-                createEvent(event)
-                newEvents.append(event)
-            except Exception as e:
-                logger.debug("Event failed to create: %s", event.uid(), e)
+        try: 
+            logger.info("Persisting event: %s", event)
+            createEvent(event)
+            newEvents.append(event)
+        except Exception as e:
+            logger.debug("Event failed to create: %s", event.uid(), e)
     
     return { "new": newEvents, "delete": removeEvents }

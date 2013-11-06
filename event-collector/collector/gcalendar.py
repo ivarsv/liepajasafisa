@@ -68,7 +68,7 @@ def calendars(client = None):
     """
     return returnValidClient(client).GetOwnCalendarsFeed().entry
 
-def get(client, name = "LiepājasAfiša"):
+def get(client, name = u"LiepājasAfiša"):
     """
     Returns calendar where all events should 
     be created. Defaults name to "LiepājasAfiša"
@@ -91,7 +91,7 @@ def delete(client, calendar, event):
     
     query.start_min = date.strftime("%Y-%m-%d")
     query.start_max = delta.strftime("%Y-%m-%d")
-    query.text_query= event.name
+    query.text_query= event.name.encode('utf-8')
 
     feed = client.GetCalendarEventFeed(q=query, uri = calendar.link[0].href)
     for googleEvent in feed.entry:

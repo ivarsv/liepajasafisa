@@ -36,7 +36,7 @@ class Event:
         """
         Generates a unique ID for the event. Used as unqiue constraint in database.
         """ 
-        return md5.new(self.__str__()).hexdigest()
+        return md5.new(self.__str__().encode('utf-8')).hexdigest()
     
     def score(self, event):
         """
@@ -67,4 +67,4 @@ class Event:
         self.__dict__[name] = value
     
     def __str__(self):
-        return "Event: %s, %s, %s, %s" % (self.date, self.time, self.name, self.location)
+        return u"Event: %s, %s, %s, %s" % (self.date, self.time, self.name, self.location)
