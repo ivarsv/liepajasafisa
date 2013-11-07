@@ -13,10 +13,6 @@ class ComparisonFilter():
         """Allows to modify any of the events before comparing""" 
         pass
     
-    def whenMatching(self, event1, event2): 
-        """Called when first and second is the same"""
-        pass
-
 class Event:
     def __init__(self, date, time, name, location, description, *args):
         self.date = date.strip()
