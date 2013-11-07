@@ -9,10 +9,12 @@ from Levenshtein import ratio
 RATIO_THRESHOLD = 0.75
 
 class ComparisonFilter():
-    def modify(self, event1, event2): pass
+    def modify(self, event1, event2):
+        """Allows to modify any of the events before comparing""" 
+        pass
     
     def whenMatching(self, event1, event2): 
-        """Called when event1 is likely to match event"""
+        """Called when first and second is the same"""
         pass
 
 class Event:
@@ -41,7 +43,7 @@ class Event:
     def score(self, event):
         """
         Generates a score on how similar self is to given event. 
-        Returns zero if event is not happening on the same day or time (if provided)
+        Returns zero if event is not happening on the same day / time (if provided)
         
         Generates score from name and location based on Levenshtein with 
         extra fixed confidence rules
@@ -51,8 +53,7 @@ class Event:
         
         score = ratio(self.name.lower(), event.name.lower()) * ratio(self.location.lower(), event.location.lower())
         
-        # if location is the same and time is the same we are more 
-        # confident that it is the same event.
+        # if location is the same  we are more confident that it is the same event.
         if self.location.lower() == event.location.lower(): 
             score = score + .2
         

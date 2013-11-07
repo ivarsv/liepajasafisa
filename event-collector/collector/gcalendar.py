@@ -70,8 +70,8 @@ def calendars(client = None):
 
 def get(client, name = u"LiepājasAfiša"):
     """
-    Returns calendar where all events should 
-    be created. Defaults name to "LiepājasAfiša"
+    Returns calendar by name 
+    where name defaults to "LiepājasAfiša"
     """
     for calendar in calendars(client):
         if calendar.title.text == name: 
