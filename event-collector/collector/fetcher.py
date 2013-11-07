@@ -106,8 +106,6 @@ def mergePair(eventList, otherEventList, filters = []):
             
             [f.modify(event1, event2) for f in filters]
             if score > collector.model.RATIO_THRESHOLD:
-                [f.whenMatching(event1, event2) for f in filters]
-                
                 if not event1.description and event2.description: 
                     event1.description = event2.description
                     
