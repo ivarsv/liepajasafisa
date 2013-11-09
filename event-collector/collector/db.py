@@ -108,14 +108,14 @@ def createEvents(events):
         # that are too similar.
         for existingEvent in eventMap[date]:
             score = event.score(existingEvent)
-            if score > collector.model.RATIO_THRESHOLD:
+            check = existingEvent.time and event.time and event.time == existingEvent.time and event.location == existingEvent.location
+            if score > collector.model.RATIO_THRESHOLD or check:
                 logger.info("Adding event for deletion: %s ", existingEvent)
                 try: eventMap[date].remove(existingEvent)
                 except: 
                     logger.debug("Failed to remove event %s from map", event)
                 deleteEvent(existingEvent)
                 removeEvents.append(existingEvent)
-             
         try: 
             logger.info("Persisting event: %s", event)
             createEvent(event)
