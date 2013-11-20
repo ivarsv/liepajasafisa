@@ -89,8 +89,7 @@ def createEvents(events):
     """
     Returns only new events. New events should be posted on google calendar.
     Should check for event updates comparing the score.
-    """ 
-    
+    """
     logger.info("Storing %d events", len(events))
     
     # store existing dates where thet key is date and value collection 
@@ -102,15 +101,15 @@ def createEvents(events):
         if eventExists(event.uid()): continue
         
         date = event.date
-        if not eventMap.has_key(date): eventMap[date] = getEvents(date)
+        if not eventMap.has_key(date): 
+            eventMap[date] = getEvents(date)
             
         # go through existing events and delete the ones 
         # that are too similar.
         for existingEvent in eventMap[date]:
             score = event.score(existingEvent)
-            check = existingEvent.time and event.time and event.time == existingEvent.time and event.location == existingEvent.location
-            if score > collector.model.RATIO_THRESHOLD or check:
-                logger.info("Adding event for deletion: %s ", existingEvent)
+            if score > collector.model.RATIO_THRESHOLD:
+                logger.info("Deleting event: %s ", existingEvent)
                 try: eventMap[date].remove(existingEvent)
                 except: 
                     logger.debug("Failed to remove event %s from map", event)
@@ -118,8 +117,10 @@ def createEvents(events):
                 removeEvents.append(existingEvent)
         try: 
             logger.info("Persisting event: %s", event)
+            eventMap[date].append(event)
             createEvent(event)
             newEvents.append(event)
+                
         except Exception as e:
             logger.debug("Event failed to create: %s", event.uid(), e)
     

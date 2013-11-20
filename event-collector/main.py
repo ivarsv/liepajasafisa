@@ -40,7 +40,7 @@ def main():
     for event in events["new"]:
         collector.gcalendar.create(event, calendar, client)
     
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()
     
     

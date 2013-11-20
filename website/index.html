@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="fragment" content="!" />
+		    
+		<title>Liepājas Afiša</title>
+
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link rel="stylesheet" href="css/bootstrap-theme.css" />
+
+		<link rel="stylesheet" href="css/afisa.css" />
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+	<body>
+		<div id="fb-root"></div>
+		<script>
+			( function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id))
+						return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=876713499012759";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		</script>
+		
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#!">Liepājas Afiša</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#!kontakti">Kontakti</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container ng-cloak">
+			<div ng-view>
+				<!-- view loaded here -->
+			</div>
+
+			<div class="social-buttons">
+				<div class="fb-share-button" data-href="http://afisa.mindmutex.com" data-type="button_count"></div>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-text="Iespējams labākā pasākumu afiša Liepājā" data-hashtags="liepaja">Tweet</a>
+				<script>
+					! function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+						if (!d.getElementById(id)) {
+							js = d.createElement(s);
+							js.id = id;
+							js.src = p + '://platform.twitter.com/widgets.js';
+							fjs.parentNode.insertBefore(js, fjs);
+						}
+					}(document, 'script', 'twitter-wjs');
+				</script>
+			</div>
+		</div>
+		
+
+
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<script type="text/javascript" src="js/i18n/angular-locale_lv.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/afisa.js"></script>
+
+		<script type="text/javascript">
+			function googleOnLoad() {
+				angular.bootstrap(document, ['afisa']);
+			}
+		</script>
+		<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleOnLoad"></script>
+	</body>
+</html>

@@ -49,19 +49,11 @@ class Event:
         
         score = ratio(self.name.lower(), event.name.lower()) * ratio(self.location.lower(), event.location.lower())
         
-        # if location is the same  we are more confident that it is the same event.
-        if self.location.lower() == event.location.lower(): 
+        # if location is the same 
+        # we are more confident that it is the same event.
+        if self.time and self.location.lower() == event.location.lower(): 
             score = score + .2
-        
         return min(1, score)
-    
-    def __setattr__(self, name, value):
-        """
-        Perform validation before setting properties on object.
-        Make sure time is provided in valid format.
-        """
-        if name == "time" and (value == " " or value == "00:00"): value = ""
-        self.__dict__[name] = value
     
     def __str__(self):
         return u"Event: %s, %s, %s, %s" % (self.date, self.time, self.name, self.location)

@@ -1,0 +1,23 @@
+div.title {
+	margin-left: 10px;
+	display: inline;
+	font-size: 1.1em;
+}
+div.header-navigation {
+	margin-bottom: 20px;
+}
+
+.event-time { width: 50px; }
+.event-allday {
+	font-size: 0.9em;
+}
+.event-allday p {margin-bottom: 2px;}
+.social-buttons {
+	overflow: hidden;
+	padding-top: 15px;
+	margin-bottom: 20px;
+}
+.social-buttons>* {
+	float: left;
+	margin: 5px;
+}

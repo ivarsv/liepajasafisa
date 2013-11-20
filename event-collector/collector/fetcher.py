@@ -37,27 +37,12 @@ def fetchLiepajniekiemEvents():
                     event.time = content
                 elif className == "event": 
                     event.name = content
-            events.append(event)
-    logger.info("Collected total: %d", len(events))
-    return events
-
-def fetchLiepajasKulturaEvents():
-    url = "http://www.liepajaskultura.lv/lv/kalendars"
-    logger.info("Parse: %s", url)
-    
-    tree = html.parse(url)
-    path = tree.xpath("//table[@class='calendar']/tr[position()>1]")
-    
-    events = []
-    for row in path:
-        stack = []
-        for column in row:
-            className = column.get("class")
-            if className == "calendar-text-date":
-                del column[0]
-            stack.append(unicode(column.text_content()))
+                    
+            # hackish
+            if event.time == u"00:00" and event.location != u"Kino Balle": 
+                event.time = u"";
             
-        events.append(collector.model.Event(*stack))
+            events.append(event)
     logger.info("Collected total: %d", len(events))
     return events
 
@@ -80,8 +65,10 @@ def fetchFontaineFormat(url, location, defaultTime):
     events = []
     for event in path:
         (day, month) = [int(s) for s in event.xpath(".//p[@class='date']//text()")[0].strip().split(".")]
+        
         if month < date.month: 
-            date = date + datetime.timedelta(year=1)
+            date.replace(year = date.year + 1)
+            
         date = date.replace(day=day, month=month)
         time = defaultTime
         name = unicode(event.xpath(".//h3//text()")[0].strip())
@@ -98,7 +85,7 @@ def fetchFontaineFormat(url, location, defaultTime):
     return events
 
 def mergePair(eventList, otherEventList, filters = []):
-    # list must be equal
+    # lists must be equal
     for event1 in eventList: 
         temp = []
         for event2 in otherEventList[:]:
@@ -137,7 +124,6 @@ def filterDate(events, date):
         
 
 def fetch(): return [fetchLiepajniekiemEvents(), 
-                     fetchLiepajasKulturaEvents(), 
                      fetchFontainePalace(), 
                      fetchFireBar(), 
                      fetchPrisonBar()]

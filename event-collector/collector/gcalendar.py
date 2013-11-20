@@ -54,7 +54,7 @@ def create(event, calendar, client = None):
         
     gevent = gdata.calendar.data.CalendarEventEntry()
     gevent.title = atom.data.Title(text=event.name)
-    gevent.details = event.description
+    gevent.content = atom.data.Content(text=event.description)
     gevent.where.append(gdata.calendar.data.CalendarWhere(value=event.location))
     gevent.when.append(gdata.calendar.data.When(start=stime, end=etime))
 
@@ -99,6 +99,7 @@ def delete(client, calendar, event):
         # very simple comparison that could be improved
         # to be more bulletproof
         if googleEvent.title.text == event.name:
+            logger.info("Deleting entry: %s", googleEvent.GetHtmlLink().href)
             client.Delete(googleEvent)
 
 def returnValidClient(c):

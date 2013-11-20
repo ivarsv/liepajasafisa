@@ -4,6 +4,8 @@ from collector.model import ComparisonFilter
 
 groups = []
 groups.append([u"Jauno mediju mākslas laboratorija", u"Liepājas Universitāte"])
+groups.append([u"Red Sun Buffet", u"Kokteiļbārs \"Red Sun Buffet\""])
+groups.append([u"Ideju bode", u"Radošā telpa \"Ideju bode\""])
 
 class LocationGroupPriority(ComparisonFilter):
     def modify(self, event1, event2):
