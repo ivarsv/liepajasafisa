@@ -1,5 +1,6 @@
 # coding=utf8
- 
+
+
 import datetime
 import logging
 import re
@@ -89,7 +90,6 @@ def fetchFontaineFormat(url, location, defaultTime):
     return events
 
 def mergePair(eventList, otherEventList, filters = []):
-    # lists must be equal
     for event1 in eventList: 
         temp = []
         for event2 in otherEventList[:]:
@@ -127,7 +127,9 @@ def excludeLocation(events, locations):
     return output
         
 
-def fetch(): 
+def fetch():
+    # doesnt work very well if more than one global site used to fetch events
+    # add more individual or use non-rule based approach - some sort of clustering...
     globalEvents = fetchLiepajniekiemEvents()
     globalEvents = excludeLocation(globalEvents, [L_FONTAINEPALACE, L_FIREBAR, L_PRISONBAR])
     
