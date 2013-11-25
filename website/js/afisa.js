@@ -29,10 +29,11 @@ afisaApp.factory('$calendar', ['dateFilter', function(dateFilter){
 		angular.forEach(items, function(value) {
 			var event = {
 				title: value.summary,
-				description: value.description,
 				location: value.location,
+				description: value.description,
 				full: typeof value.start.date != "undefined" 
 			};
+			
 			var date = new Date(Date.parse(value.start.dateTime || value.start.date));
 			var utcOffset = date.getTimezoneOffset();
 			
@@ -81,12 +82,15 @@ afisaApp.controller('AfisaController', ['$scope', '$calendar', function ($scope,
 				$scope.date = new Date();
 			};
 			$scope.date.setDate($scope.date.getDate() + offset);
-			
-			$calendar($scope.date, function(items) {
-				$scope.$apply(function(){
-					$scope.events = items;
+			if (!$scope.loading) {
+				$scope.loading = true;
+				$calendar($scope.date, function(items) {
+					$scope.$apply(function(){
+						$scope.loading = false;
+						$scope.events = items;
+					});
 				});
-			});
+			}
 		};
 	};
 	

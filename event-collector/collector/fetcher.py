@@ -10,6 +10,10 @@ from lxml import html
 
 logger = logging.getLogger()
 
+L_FONTAINEPALACE = u"Fontaine Palace"
+L_FIREBAR = u"Fire Bar"
+L_PRISONBAR = u"Prison Bar"
+
 def fetchLiepajniekiemEvents():
     url = "http://www.liepajniekiem.lv/afisa"
     logger.info("Parse: %s", url)
@@ -27,7 +31,7 @@ def fetchLiepajniekiemEvents():
                 raise "Unexpected date, expected day: %s, but got date: %s" % (day, date)
             
         for row in tbody.xpath(".//tr"):
-            event = collector.model.Event(date.strftime("%d.%m.%Y"), "", "", "", "")
+            event = collector.model.Event(unicode(date.strftime("%d.%m.%Y")), u"", u"", u"", u"")
             
             for column in row: 
                 className, content = column.get("class"), unicode(column.text_content()).strip()
@@ -38,22 +42,22 @@ def fetchLiepajniekiemEvents():
                 elif className == "event": 
                     event.name = content
                     
-            # hackish
+            # hackish exclude for movies
             if event.time == u"00:00" and event.location != u"Kino Balle": 
                 event.time = u"";
-            
             events.append(event)
     logger.info("Collected total: %d", len(events))
+    
     return events
 
 def fetchFontainePalace(): 
-    return fetchFontaineFormat("http://www.fontainepalace.lv/", u"Fontaine Palace", "22:00")
+    return fetchFontaineFormat("http://www.fontainepalace.lv/", L_FONTAINEPALACE, "22:00")
 
 def fetchFireBar(): 
-    return fetchFontaineFormat("http://www.firebar.lv/", u"Fire Bar", "21:00")
+    return fetchFontaineFormat("http://www.firebar.lv/", L_FIREBAR, "21:00")
 
 def fetchPrisonBar(): 
-    return fetchFontaineFormat("http://www.prisonbar.lv/", u"Prison Bar", "22:00")
+    return fetchFontaineFormat("http://www.prisonbar.lv/", L_PRISONBAR, "22:00")
 
 def fetchFontaineFormat(url, location, defaultTime):
     logger.info("Parse: %s", url)
@@ -115,16 +119,20 @@ def merge(fetches, filters = []):
         merged = mergePair(merged, fetches.pop(), filters)
     return merged
 
-def filterDate(events, date):
+def excludeLocation(events, locations):
     output = []
     for event in events: 
-        if event.date == date: 
+        if event.location not in locations: 
             output.append(event)
     return output
         
 
-def fetch(): return [fetchLiepajniekiemEvents(), 
-                     fetchFontainePalace(), 
-                     fetchFireBar(), 
-                     fetchPrisonBar()]
+def fetch(): 
+    globalEvents = fetchLiepajniekiemEvents()
+    globalEvents = excludeLocation(globalEvents, [L_FONTAINEPALACE, L_FIREBAR, L_PRISONBAR])
+    
+    return [globalEvents,
+            fetchFontainePalace(),
+            fetchFireBar(),
+            fetchPrisonBar()]
 

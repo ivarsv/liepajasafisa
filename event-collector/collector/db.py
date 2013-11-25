@@ -117,7 +117,6 @@ def createEvents(events):
                 removeEvents.append(existingEvent)
         try: 
             logger.info("Persisting event: %s", event)
-            eventMap[date].append(event)
             createEvent(event)
             newEvents.append(event)
                 

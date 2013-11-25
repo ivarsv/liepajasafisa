@@ -14,41 +14,47 @@
 	<div class="title">
 		{{date | date:"EEEE dd/MM/yyyy" | capitalize }}
 	</div>
+	
 </div>
 
 <input class="form-control" type="search" placeholder="Meklēt" name="search" ng-model="search"/>
 <div class="checkbox">
 	<label>
 		<input type="checkbox" checked="true" ng-model="showall">
-		Rādīt visus pasākums </label>
+		Rādīt visus pasākums
+	</label>
 </div>
 
-<div ng-if="showall" class="panel panel-warning event-allday">
-	<div class="panel-body">
-		<p ng-repeat="event in events | filter:{full:true} | filter:search | orderBy:'location'" >
-			<a href="https://maps.google.lv/?q={{ event.location }}" target="_blank">{{event.location}}</a>
-			{{ event.title }}
-			<small>{{ event.description }}</small>
-		</p>
+<img  ng-if="loading" src="img/loading.gif" />
+
+<div ng-if="!loading">
+	<div ng-if="showall" class="panel panel-warning event-allday">
+		<div class="panel-body">
+			<p ng-repeat="event in events | filter:{full:true} | filter:search | orderBy:'location'" >
+				<a href="https://maps.google.lv/?q={{ event.location }}" target="_blank">{{event.location}}</a>
+				{{ event.title }}
+				<small>{{ event.description }}</small>
+			</p>
+		</div>
 	</div>
-</div>
-
-<table class="table table-striped">
-	<tbody>
-		<tr ng-repeat="event in filtered = (events | filter:{full:false} | filter:search | orderBy:'datetime')">
-			<td class="text-center event-time"><h4>{{ event.datetime | date:"HH:mm" }}</h4></td>
-			<td>
-				<strong>{{ event.title }}</strong><br/>
-				<small class="clearfix" ng-if="event.description">{{ event.description }}</small>
-				
-				<a href="https://maps.google.lv/?q={{ event.location }}" target="_blank">{{event.location}}</a> |
-				<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ event.title }}&dates={{ event.utcStart | date:'yyyyMMddTHHmm00' }}Z/{{ event.utcEnd | date:'yyyyMMddTHHmm00' }}Z&details={{ event.description }}&location={{event.location}}&trp=false&sprop=LiepājasAfiša&sprop=name:http://afisa.mindmutex.com" target="_blank">
-					Pievienot kalendāram
-				</a>	
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div ng-hide="filtered.length" class="alert alert-info">
-	Nav rezultātu
+	
+	<table class="table table-striped">
+		<tbody>
+			<tr ng-repeat="event in filtered = (events | filter:{full:false} | filter:search | orderBy:'datetime')">
+				<td class="text-center event-time"><h4>{{ event.datetime | date:"HH:mm" }}</h4></td>
+				<td>
+					<strong>{{ event.title }}</strong><br/>
+					<small class="clearfix" ng-if="event.description">{{ event.description }}</small>
+					
+					<a href="https://maps.google.lv/?q={{ event.location }}" target="_blank">{{event.location}}</a> |
+					<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ event.title }}&dates={{ event.utcStart | date:'yyyyMMddTHHmm00' }}Z/{{ event.utcEnd | date:'yyyyMMddTHHmm00' }}Z&details={{ event.description }}&location={{event.location}}&trp=false&sprop=LiepājasAfiša&sprop=name:http://afisa.mindmutex.com" target="_blank">
+						Pievienot kalendāram
+					</a>	
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div ng-hide="filtered.length" class="alert alert-info">
+		Nav rezultātu
+	</div>
 </div>
