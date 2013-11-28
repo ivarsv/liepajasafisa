@@ -45,7 +45,8 @@
 					fjs.parentNode.insertBefore(js, fjs);
 				}(document, 'script', 'facebook-jssdk'));
 		</script>
-		
+		<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+			
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -60,34 +61,14 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="#!kontakti">Kontakti</a>
+							<a href="#!par">Par</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		
-		<div class="container ng-cloak">
-			<div ng-view>
-				<!-- view loaded here -->
-			</div>
-
-			<div class="social-buttons">
-				<div class="fb-share-button" data-href="http://goo.gl/zK2n2G" data-type="button_count"></div>
-				
-				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://goo.gl/zK2n2G" data-text="Uzzini par to kas notiek Liepājā" data-hashtags="liepaja">Tweet</a>
-				<script>
-					! function(d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-						if (!d.getElementById(id)) {
-							js = d.createElement(s);
-							js.id = id;
-							js.src = p + '://platform.twitter.com/widgets.js';
-							fjs.parentNode.insertBefore(js, fjs);
-						}
-					}(document, 'script', 'twitter-wjs');
-				</script>
-			</div>
+		<div class="container ng-cloak" ng-view>
 		</div>
 		
 

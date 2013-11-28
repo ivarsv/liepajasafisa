@@ -8,9 +8,9 @@ var afisaApp = angular.module('afisa', ['ngRoute']).config(function($routeProvid
 			controller: 'AfisaController', 
 			templateUrl:'templates/index.html'
 		})
-		.when('/kontakti', {
-			controller: 'KontaktiController', 
-			templateUrl: 'templates/contacts.html'
+		.when('/par', {
+			controller: 'ParController', 
+			templateUrl: 'templates/about.html'
 		})
 		.otherwise({
 			redirectTo:'/'
@@ -100,7 +100,7 @@ afisaApp.controller('AfisaController', ['$scope', '$calendar', function ($scope,
 	});
 	$scope.$on('$routeChangeSuccess', function() {
 	  $scope.isViewLoading = false;
-	});	
+	});
 	
 	$scope.showall = true;
 	
@@ -111,6 +111,7 @@ afisaApp.controller('AfisaController', ['$scope', '$calendar', function ($scope,
 	$scope.handleDayReset();
 }]);
 
-afisaApp.controller('KontaktiController', ['$scope', '$calendar', function ($scope, $calendar) {
-	
+afisaApp.controller('ParController', ['$scope', function ($scope) {
+	FB.XFBML.parse();
+	twttr.widgets.load();
 }]);
